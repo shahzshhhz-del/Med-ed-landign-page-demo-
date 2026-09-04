@@ -2,14 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-/* ─── TYPES ─────────────────────────────────────────────────────── */
-interface FloatingLabelProps {
-  text: string;
-  icon: string;
-  className?: string;
-  delay?: number;
-}
-
 /* ─── CONSTANTS ─────────────────────────────────────────────────── */
 const NAV_LINKS = ["Features", "Who it's for", "Why we built this", "FAQ"];
 
@@ -49,33 +41,6 @@ function MedEddLogo({ size = "md" }: { size?: "sm" | "md" }) {
         style={{ fontFamily: "var(--font-clash)" }}
       >
         Med<span style={{ color: "#1B4FD8" }}>Edd</span>
-      </span>
-    </div>
-  );
-}
-
-/* ─── FLOATING LABEL ─────────────────────────────────────────────── */
-function FloatingLabel({ text, icon, className = "", delay = 0 }: FloatingLabelProps) {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 900 + delay);
-    return () => clearTimeout(t);
-  }, [delay]);
-
-  return (
-    <div
-      className={`absolute z-40 flex items-center gap-2 bg-white/95 backdrop-blur-sm rounded-full px-3.5 py-2 border border-gray-100/80 transition-all duration-700 ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-      } ${className}`}
-      style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)" }}
-    >
-      <span className="text-sm leading-none">{icon}</span>
-      <span
-        className="text-xs font-bold text-gray-800 whitespace-nowrap"
-        style={{ fontFamily: "var(--font-clash)" }}
-      >
-        {text}
       </span>
     </div>
   );
@@ -239,14 +204,18 @@ export default function MedEddPage() {
         <div
           className="absolute top-0 right-0 bottom-0 overflow-hidden"
           style={{
-            width: "41%",
+            width: "45%",
+            borderRadius: "180px 0 0 64px",
             background: "linear-gradient(155deg, #1B4FD8 0%, #1540BC 55%, #1035A0 100%)",
           }}
         >
           <GeometricPattern />
 
           {/* Blue panel content */}
-          <div className="relative z-10 h-full flex flex-col justify-center px-8 lg:px-10 pt-20 pb-36">
+          <div
+            className="relative z-10 h-full flex flex-col justify-start pb-36"
+            style={{ paddingTop: "130px", paddingLeft: "clamp(56px, 9vw, 120px)", paddingRight: "clamp(32px, 5vw, 64px)" }}
+          >
             <p
               className="text-blue-200/70 text-[10px] font-bold uppercase tracking-[0.2em] mb-4"
               style={{ fontFamily: "var(--font-clash)" }}
@@ -286,8 +255,11 @@ export default function MedEddPage() {
               ))}
             </div>
 
-            {/* Audience cluster — bottom of blue panel */}
-            <div className="absolute bottom-7 left-8 lg:left-10 right-6 z-10">
+            {/* Bottom row — profession info, right-aligned so it clears the hero image */}
+            <div
+              className="absolute bottom-7 z-10 flex justify-end"
+              style={{ left: "clamp(56px, 9vw, 120px)", right: "clamp(32px, 5vw, 64px)" }}
+            >
               <div className="flex items-center">
                 {AUDIENCE_CIRCLES.map((a, i) => (
                   <img
@@ -298,7 +270,7 @@ export default function MedEddPage() {
                     style={{ marginLeft: i === 0 ? 0 : "-8px", zIndex: 10 - i, position: "relative" }}
                   />
                 ))}
-                <div className="ml-3">
+                <div className="ml-3 text-right">
                   <p
                     className="text-white text-[11px] font-bold leading-tight"
                     style={{ fontFamily: "var(--font-clash)" }}
@@ -315,27 +287,6 @@ export default function MedEddPage() {
                   </p>
                 </div>
               </div>
-
-              {/* Appreciation line — mirrors Reference 1's bottom-right micro text */}
-              <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/10">
-                <div className="w-5 h-5 rounded-full bg-white/15 border border-white/25 flex items-center justify-center flex-shrink-0">
-                  <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                    <path
-                      d="M2 4.5h5M4.5 2.5L6.5 4.5l-2 2"
-                      stroke="white"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-                <p
-                  className="text-white/40 leading-tight"
-                  style={{ fontSize: "9px", fontFamily: "var(--font-clash)" }}
-                >
-                  We appreciate every learner who chooses MedEdd.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -345,8 +296,8 @@ export default function MedEddPage() {
 
         {/* ── LEFT CONTENT ───────────────────────────────────────── */}
         <div
-          className="absolute inset-0 flex flex-col justify-center z-20"
-          style={{ right: "41%", paddingLeft: "clamp(28px, 4vw, 52px)", paddingTop: "68px", paddingBottom: "100px" }}
+          className="absolute inset-0 flex flex-col justify-start z-20"
+          style={{ right: "45%", paddingLeft: "clamp(28px, 4vw, 52px)", paddingTop: "112px", paddingBottom: "120px" }}
         >
           {/* Eyebrow */}
           <div
@@ -368,7 +319,7 @@ export default function MedEddPage() {
             style={{
               fontFamily: "var(--font-clash)",
               fontWeight: 480,
-              fontSize: "clamp(46px, 5.8vw, 84px)",
+              fontSize: "clamp(50px, 6.6vw, 96px)",
               letterSpacing: "-0.03em",
               lineHeight: "0.94",
               transitionDelay: "200ms",
@@ -443,15 +394,16 @@ export default function MedEddPage() {
           </p>
         </div>
 
-        {/* ── CENTRAL HERO IMAGE — overlaps white/blue boundary ─── */}
+        {/* ── CENTRAL HERO IMAGE — straddles white/blue boundary, top to bottom ─── */}
         <div
           className={`absolute z-30 bottom-0 transition-all duration-1000 ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
           style={{
-            left: "50%",
+            left: "58%",
             transform: "translateX(-50%)",
-            width: "clamp(200px, 20vw, 310px)",
+            top: "72px",
+            width: "clamp(380px, 36vw, 560px)",
             transitionDelay: "600ms",
           }}
         >
@@ -459,92 +411,20 @@ export default function MedEddPage() {
           <div
             className="absolute rounded-full opacity-25"
             style={{
-              inset: "15% 10% -5% 10%",
+              inset: "10% 5% 0% 5%",
               background: "radial-gradient(ellipse, #3B82F6 0%, transparent 70%)",
-              filter: "blur(30px)",
+              filter: "blur(40px)",
             }}
           />
           <img
-            src="https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=700&q=85&fit=crop&crop=top"
-            alt="Healthcare professional studying"
-            className="relative w-full object-cover object-top"
-            style={{ maxHeight: "460px", borderRadius: "50% 50% 0 0 / 40% 40% 0 0" }}
+            src="/images/mededd-hero-doctor.png"
+            alt="Healthcare professional"
+            className="relative w-full h-full object-contain object-bottom"
+            style={{
+              filter: "drop-shadow(0 30px 40px rgba(16,30,80,0.28))",
+            }}
           />
-          {/* Gradient fade at bottom of image */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-24"
-            style={{ background: "linear-gradient(to top, #E8EEFA 0%, transparent 100%)" }}
-          />
-        </div>
 
-
-        {/* ── BOTTOM-LEFT INFO CARD (like Reference 1's stats card) ── */}
-        <div
-          className={`absolute z-30 transition-all duration-700 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-          style={{
-            bottom: "24px",
-            left: "clamp(28px, 4vw, 52px)",
-            maxWidth: "280px",
-            transitionDelay: "750ms",
-          }}
-        >
-          <div
-            className="bg-white rounded-2xl overflow-hidden"
-            style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)" }}
-          >
-            <div className="flex items-stretch">
-              {/* Thumbnail / icon block */}
-              <div
-                className="w-[60px] flex-shrink-0 flex items-center justify-center text-2xl"
-                style={{ background: "linear-gradient(135deg, #EEF3FF, #DBEAFE)" }}
-              >
-                📚
-              </div>
-              {/* Text block */}
-              <div className="px-3.5 py-3 flex-1">
-                <p
-                  className="text-gray-900 font-black text-[12px] leading-snug"
-                  style={{ fontFamily: "var(--font-clash)" }}
-                >
-                  Your study path,
-                  <br />
-                  built around what matters.
-                </p>
-                <div className="flex items-center gap-1.5 mt-2">
-                  {[
-                    { label: "Personalized", color: "#1B4FD8", bg: "#EEF3FF" },
-                    { label: "Focused", color: "#15803d", bg: "#F0FDF4" },
-                    { label: "Exam-ready", color: "#c2410c", bg: "#FFF7ED" },
-                  ].map((t) => (
-                    <span
-                      key={t.label}
-                      className="text-[9px] font-black rounded-full px-2 py-0.5"
-                      style={{
-                        fontFamily: "var(--font-clash)",
-                        color: t.color,
-                        background: t.bg,
-                      }}
-                    >
-                      {t.label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-            {/* Animated progress bar */}
-            <div className="h-[3px] bg-gray-100">
-              <div
-                className="h-full rounded-full"
-                style={{
-                  width: mounted ? "68%" : "0%",
-                  background: "linear-gradient(90deg, #1B4FD8, #3B82F6)",
-                  transition: "width 1.2s ease 1.3s",
-                }}
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
